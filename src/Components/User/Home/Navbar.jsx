@@ -1,12 +1,25 @@
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { dataProvider } from "../../Context Api/DataProvider";
 
 const Navbar = () => {
+  const{user,logout}=useContext(dataProvider)
   const li = (
     <>
-      <NavLink to={"/"}>Home</NavLink>
-      <NavLink to={"/login"}>Login</NavLink>
+      <li><NavLink to={"/"}>Home</NavLink></li>
+      <li><NavLink to={"/login"}>Login</NavLink></li>
+      <li><NavLink to={"/adminDashbord"}>Admin Dashbord</NavLink></li>
+      <li><NavLink to={"/Dashbord"}>Dashbord</NavLink></li>
     </>
   );
+
+console.log(user)
+
+  // logout handle.
+
+  const logoutHandle=()=>{
+    logout()
+  }
 
   return (
     <div>
@@ -41,9 +54,17 @@ const Navbar = () => {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1 flex gap-6 text-lg">{li}</ul>
         </div>
-        <div className="navbar-end">
-          <a className="btn">Button</a>
+
+        {/* end side logo and name. */}
+        <div className="navbar-end flex gap-1">
+         <div className="w-[50px] h-[50px]">
+          <img src={user?.photoURL} className="w-full h-full object-contain" alt="" />
+         </div>
+         <h1>{user?.displayName}</h1>
+         <button onClick={logoutHandle} className="btn btn-sm btn-primary">logout</button>
         </div>
+
+
       </div>
     </div>
   );
