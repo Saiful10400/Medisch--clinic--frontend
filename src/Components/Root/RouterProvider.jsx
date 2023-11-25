@@ -4,32 +4,61 @@ import Home from "../User/Home/Home";
 import Login from "../User/Register$Login/Login";
 import Register from "../User/Register$Login/Register";
 import AdminDashbord from "../Dashbord/AdminDashbord";
+import AddBanner from "../Dashbord/AdminDashbord/AddBanner";
+import Users from "../Dashbord/AdminDashbord/Users";
 
-export const router=createBrowserRouter([{
-    path:"/",
-    element:<User></User>,
-    children:[
-        {
-            path:"/",
-            element:<Home></Home>
-        },
-        {
-            path:"/login",
-            element:<Login></Login>
-        },
-        {
-            path:"/register",
-            element:<Register></Register>
-        },
-        {
-            path:"/dashbord",
-            element:<h1>this is dashbord</h1>
-        }
-    ]
-},
-{
-    path:"/adminDashbord",
-    element:<AdminDashbord></AdminDashbord>
-}
-]
-)
+export const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <User></User>,
+    children: [
+      {
+        path: "/",
+        element: <Home></Home>,
+      },
+      {
+        path: "/login",
+        element: <Login></Login>,
+      },
+      {
+        path: "/register",
+        element: <Register></Register>,
+      },
+      {
+        path: "/dashbord",
+        element: <h1>this is dashbord</h1>,
+      },
+    ],
+  },
+  {
+    path: "/adminDashbord",
+    element: <AdminDashbord></AdminDashbord>,
+    children: [
+      {
+        path: "allUsers",
+        element: <Users></Users>,
+      },
+      {
+        path: "addBanner",
+        element: <AddBanner></AddBanner>,
+      },
+      {
+        path: "allBanner",
+        element: <h1>banner</h1>,
+      },
+      {
+        path: "addTest",
+        element: <h1>banner</h1>,
+      },
+      {
+        path: "allTests",
+        element: <h1>banner</h1>,
+      },
+      {
+        path: "resurvation",
+        element: <h1>banner</h1>,
+      },
+      
+    ],
+  },
+]);

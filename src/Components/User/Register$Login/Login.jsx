@@ -51,14 +51,14 @@ console.log(user)
   return (
     <div>
       <div>
-        <div className="flex flex-col lg:flex-row h-screen">
+        <div className="flex flex-col lg:flex-row h-[calc(100vh-76px)]">
           <div className="lg:w-1/3 flex relative">
             <img
               className="absolute bottom-0 left-[50px] h-[483px] hidden lg:block"
               src={Avatar}
               alt=""
             /> 
-            <div className="lg:w-1/2 w-full  bg-[#E12454] lg:h-screen">
+            <div className="lg:w-1/2 w-full  bg-[#E12454] lg:h-[calc(100vh-76px)]">
               <img className="py-5 lg:py-0 lg:mt-[60px] ml-[30px]" src={logo} alt="" />
             </div>
             <div className="hidden lg:block w-1/2"></div>

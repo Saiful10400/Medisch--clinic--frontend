@@ -8,12 +8,12 @@ const Navbar = () => {
     <>
       <li><NavLink to={"/"}>Home</NavLink></li>
       <li><NavLink to={"/login"}>Login</NavLink></li>
-      <li><NavLink to={"/adminDashbord"}>Admin Dashbord</NavLink></li>
+      <li><NavLink to={"/adminDashbord/allUsers"}>Admin Dashbord</NavLink></li>
       <li><NavLink to={"/Dashbord"}>Dashbord</NavLink></li>
     </>
   );
 
-console.log(user)
+ 
 
   // logout handle.
 

@@ -11,6 +11,7 @@ import upload from "../../../../public/image/upload.jpg";
 import { dataProvider } from "../../Context Api/DataProvider";
 import { updateProfile } from "firebase/auth";
 import { auth } from "../../../Authentication/firebase.config";
+import useAxiosPublic from "../../custom Hooks/useAxiosPublic";
 
 
 
@@ -29,12 +30,14 @@ const Register = () => {
 
   const { uploadUrl,signin,user } = useContext(dataProvider);
   const [error,setError]=useState(null)
+  const axiosPublic=useAxiosPublic()
 
 
   // upazila manage state.
   // const [upazila,setUpazila]=useState([])
   const [district, setDistrict] = useState([]);
   const [upazila, setupazila] = useState([]);
+
   // fetching upazila and division data
 
   useEffect(() => {
@@ -80,7 +83,7 @@ const Register = () => {
   };
 
   //   form handel
-  console.log(user)
+ 
 
   const formHandle =  (data) => {
 
@@ -93,6 +96,8 @@ const Register = () => {
     const upazila=data.upazila
     const email=data.email
     const name=data.name
+    const role="user"
+    const status="active"
  
 
     // console.log({bloodGroup,district,upazila,email,name})
@@ -114,11 +119,18 @@ const Register = () => {
     .then(res=>{
       const photoUrl=res.data.display_url
       const UserName=name
+
+      // upload into mongodb.
+
+      axiosPublic.post("/post_user",{name,email,password,upazila,district,bloodGroup,photoUrl,role,status})
+      .then(res=>console.log(res.data))
+
+
       updateProfile(auth.currentUser,{
         displayName: UserName,
          photoURL:photoUrl
       })
-      .then(result=>alert("updated successfull."))
+      
     })
 
 
@@ -151,14 +163,14 @@ const Register = () => {
 
   return (
     <div>
-      <div className="flex flex-col lg:flex-row h-screen">
+      <div className="flex flex-col lg:flex-row h-[calc(100vh-76px)]">
         <div className="lg:w-1/3  flex relative">
           <img
             className="absolute bottom-0 left-[50px] h-[483px] hidden lg:block"
             src={Avatar}
             alt=""
           />
-          <div className="lg:w-2/3 bg-[#E12454] w-full lg:h-screen">
+          <div className="lg:w-2/3 bg-[#E12454] w-full lg:h-[calc(100vh-76px)]">
             <img className="lg:mt-[60px] py-6 ml-[30px]" src={logo} alt="" />
           </div>
           <div className="lg:w-2/3"></div>
@@ -170,7 +182,7 @@ const Register = () => {
             className="flex flex-col gap-[20px]"
           >
             {/* form tittle. */}
-            <div className="mb-[15px] mt-[50px]">
+            <div className="mb-[15px] mt-[50px] lg:mt-0">
               <h1 className="text-[30px] lg:text-[36px] font-semibold">
                 Register Now
               </h1>
@@ -214,7 +226,7 @@ const Register = () => {
               {upazila?.map((item, idx) => (
                 <option
                   key={idx}
-                  value={item.name}
+                  value={`${item.name} (${item.bn_name})`}
                 >{`${item.name} (${item.bn_name})`}</option>
               ))}
             </select>
@@ -248,9 +260,9 @@ const Register = () => {
               placeholder="Confirm Password"
             />
             <h1 className={`${error? "block" : "hidden"} text-red-500 font-bold text-lg`}>Error:{error}</h1>
-            <div>
+            <div className="flex flex-col lg:flex-row justify-evenly items-center gap-3">
               <h1 className="font-bold text-lg">
-                Chose your Profile picture :
+                Upload Profile picture
               </h1>
               <input
                 onInput={profileHandle}
@@ -261,7 +273,7 @@ const Register = () => {
               />
 
               <label
-                className="w-[200px] h-[200px] inline-block "
+                className="w-[150px] h-[100px] inline-block "
                 htmlFor="profile"
               >
                 {profile ? (
@@ -272,7 +284,7 @@ const Register = () => {
                   />
                 ) : (
                   <div className="w-full h-full  border-dotted border-2">
-                    <img src={upload} alt="" />
+                    <img className="w-full h-full object-contain" src={upload} alt="" />
                   </div>
                 )}{" "}
               </label>
@@ -284,7 +296,7 @@ const Register = () => {
               Submit <FaArrowCircleRight className="text-xl" />
             </button>
           </form>
-          <h1 className=" mt-[14px] text-[14px] lg:text-[16px] font-normal">
+          <h1 className=" mt-[14px] mb-6 lg:mb-0 text-[14px] lg:text-[16px] font-normal">
             Already have an Account.{" "}
             <NavLink className="text-[#E12454]" to={"/login"}>
               Login Now
