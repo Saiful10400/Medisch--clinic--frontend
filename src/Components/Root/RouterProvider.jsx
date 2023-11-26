@@ -6,6 +6,9 @@ import Register from "../User/Register$Login/Register";
 import AdminDashbord from "../Dashbord/AdminDashbord";
 import AddBanner from "../Dashbord/AdminDashbord/AddBanner";
 import Users from "../Dashbord/AdminDashbord/Users";
+import AllBanners from "../Dashbord/AdminDashbord/AllBanners";
+import AddTest from "../Dashbord/AdminDashbord/AddTest";
+import AllTest from "../Dashbord/AdminDashbord/AllTest";
 
 export const router = createBrowserRouter([
   {
@@ -43,16 +46,16 @@ export const router = createBrowserRouter([
         element: <AddBanner></AddBanner>,
       },
       {
-        path: "allBanner",
-        element: <h1>banner</h1>,
+        path: "allBanners",
+        element: <AllBanners></AllBanners>,
       },
       {
         path: "addTest",
-        element: <h1>banner</h1>,
+        element: <AddTest></AddTest>,
       },
       {
         path: "allTests",
-        element: <h1>banner</h1>,
+        element:<AllTest></AllTest>,
       },
       {
         path: "resurvation",

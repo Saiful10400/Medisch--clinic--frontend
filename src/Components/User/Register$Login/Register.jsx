@@ -7,6 +7,7 @@ import { FaArrowCircleRight } from "react-icons/fa";
 
 import logo from "../../../../public/image/logo.png";
 import Avatar from "../../../../public/image/registerAvatar.png";
+import loading from "../../../../public/image/loading.gif";
 import upload from "../../../../public/image/upload.jpg";
 import { dataProvider } from "../../Context Api/DataProvider";
 import { updateProfile } from "firebase/auth";
@@ -70,6 +71,7 @@ const Register = () => {
 
   // profile handle.
   const [profile, setProfile] = useState(null);
+  const [preload,setPreload]=useState(false)
 
   const profileHandle = (e) => {
     const file = e.target.files[0];
@@ -86,6 +88,7 @@ const Register = () => {
  
 
   const formHandle =  (data) => {
+    setPreload(true)
 
 
 
@@ -123,7 +126,10 @@ const Register = () => {
       // upload into mongodb.
 
       axiosPublic.post("/post_user",{name,email,password,upazila,district,bloodGroup,photoUrl,role,status})
-      .then(res=>console.log(res.data))
+      .then(res=>{
+        setPreload(false)
+        console.log(res.data)
+      })
 
 
       updateProfile(auth.currentUser,{
@@ -163,7 +169,11 @@ const Register = () => {
 
   return (
     <div>
-      <div className="flex flex-col lg:flex-row h-[calc(100vh-76px)]">
+      <div className={`w-full h-[calc(100vh-76px)] bg-white absolute z-20 flex justify-center items-center ${preload? "block" :"hidden"}`}>
+      
+        <img src={loading} alt="" />
+      </div>
+      <div className="flex flex-col lg:flex-row h-[calc(100vh-76px)] relative z-0">
         <div className="lg:w-1/3  flex relative">
           <img
             className="absolute bottom-0 left-[50px] h-[483px] hidden lg:block"

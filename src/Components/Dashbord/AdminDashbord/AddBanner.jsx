@@ -40,7 +40,7 @@ const AddBanner = () => {
     const name = data.name;
     const title = data.title;
     const couponName = data.couponName;
-    const couponRate = data.couponRate;
+    const couponRate = parseInt(data.couponRate);
     const details = data.description;
     const file = data.file[0];
     const isActive=false

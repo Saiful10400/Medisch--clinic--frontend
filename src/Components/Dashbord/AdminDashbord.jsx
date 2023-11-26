@@ -45,7 +45,7 @@ const AdminDashbord = () => {
               <NavLink to={"addBanner"}><LuImagePlus></LuImagePlus>Add banner</NavLink>
             </li>
             <li className={liststyle}>
-              <NavLink to={"allBanner"}><FaRegImages></FaRegImages>All banner</NavLink>
+              <NavLink to={"allBanners"}><FaRegImages></FaRegImages>All banners</NavLink>
             </li>
             <li className={liststyle}>
               <NavLink to={"addTest"}><MdPostAdd></MdPostAdd>Add test</NavLink>

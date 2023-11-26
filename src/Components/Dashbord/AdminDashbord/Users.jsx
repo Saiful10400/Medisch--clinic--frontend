@@ -1,13 +1,36 @@
-import { useEffect, useState } from "react";
+import {  useContext, useState } from "react";
 import useAxiosPublic from "../../custom Hooks/useAxiosPublic";
+import { useQuery } from "@tanstack/react-query";
+import { GiQueenCrown } from "react-icons/gi";
+import { FaRegUser } from "react-icons/fa";
+import { dataProvider } from "../../Context Api/DataProvider";
 
 const Users = () => {
-  const [users, setUsers] = useState([]);
+  // const [users, setUsers] = useState([]);
+  // const[load,setload]=useState(true)
   const axiosPublic = useAxiosPublic();
-  useEffect(() => {
-    axiosPublic.get("/get_users").then((res) => setUsers(res.data));
-  }, [axiosPublic]);
-  console.log(users);
+  const{user}=useContext(dataProvider)
+
+
+
+
+  // useEffect(() => {
+  //   axiosPublic.get("/get_users").then((res) => setUsers(res.data));
+  // }, [axiosPublic,load]);
+ 
+// this code replacement with transtak query.
+
+
+const{data:users=[],refetch}=useQuery({
+  queryKey:['users'],
+  queryFn:async()=>{
+    const res=await axiosPublic.get("/get_users")
+    return res.data
+  }
+})
+
+
+
 
   // modal handle.
   const [modalData, setModalData] = useState(null);
@@ -15,6 +38,38 @@ const Users = () => {
     setModalData(data);
     document.getElementById("my_modal_3").showModal();
   };
+
+//   user activity handle.
+
+const activityHandle=(userData)=>{
+    let status=null
+    if(userData.status==="active"){
+        status="block"
+    }
+    else if(userData.status==="block"){
+        status="active"
+    }
+
+    axiosPublic.patch("/update_user",{email:userData.email,status})
+    .then(()=>refetch())
+}
+
+// role handle.
+
+const roleHandle=(item)=>{
+
+if(item.email.toUpperCase()!==user.email.toUpperCase() && item.role!=="admin"){
+  // change the role.
+
+  axiosPublic.patch("/role_update",{email:item.email})
+  .then(res=>{
+    console.log(res.data)
+    refetch()
+  })
+  
+}
+}
+
   return (
     <div>
       <div className="overflow-x-auto">
@@ -22,15 +77,19 @@ const Users = () => {
           {/* head */}
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Job</th>
-              <th>Favorite Color</th>
               <th></th>
+              <th>Name</th>
+              <th>Address & contact</th>
+              <th>Blood goup</th>
+              <th>Status</th>
+              <th>Role</th>
+              <th>Details</th>
             </tr>
           </thead>
           <tbody>
             {users.map((item, idx) => (
               <tr key={idx}>
+                <td>{++idx}</td>
                 <td>
                   <div className="flex items-center gap-3">
                     <div className="avatar">
@@ -43,7 +102,7 @@ const Users = () => {
                     </div>
                     <div>
                       <div className="font-bold">{item.name}</div>
-                      <div className="text-sm opacity-50">{item.role}</div>
+                      {/* <div className="text-sm opacity-50">{item.role}</div> */}
                     </div>
                   </div>
                 </td>
@@ -55,6 +114,8 @@ const Users = () => {
                   </span>
                 </td>
                 <td>{item.bloodGroup}</td>
+                <td><button onClick={()=>activityHandle(item)} className={` btn btn-sm text-white  ${item.status==="active" ? "btn-success" : "btn-error"}`}>{item.status}</button></td>
+                <td><button onClick={()=>roleHandle(item)} className={`btn  btn-sm ${item.role==="admin"?"btn-warning":"btn-primary"}`}>{item.role==="admin"?<GiQueenCrown />:<FaRegUser />}{item.role}</button></td>
                 <th>
                   <button
                     onClick={() => modalHandle(item)}
@@ -69,11 +130,13 @@ const Users = () => {
           {/* foot */}
           <tfoot>
             <tr>
-              <th></th>
+            <th></th>
               <th>Name</th>
-              <th>Job</th>
-              <th>Favorite Color</th>
-              <th></th>
+              <th>Address & contact</th>
+              <th>Blood goup</th>
+              <th>Status</th>
+              <th>Role</th>
+              <th>Details</th>
             </tr>
           </tfoot>
         </table>
