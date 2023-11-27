@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import useAxiosPublic from "../../custom Hooks/useAxiosPublic";
+import { Link } from "react-router-dom";
 
 
 
@@ -88,7 +89,7 @@ const searchHandle=(e)=>{
         <p className="text-lg font-bold">Last Date: {item.date}</p>
     </div>
     <div className="flex flex-col">
-      <button className="btn btn-primary">Details</button>
+      <Link to={`/testDetails/${item._id}`} className="btn btn-primary">Details</Link>
     </div>
   </div>
 </div>)}
@@ -98,3 +99,5 @@ const searchHandle=(e)=>{
 };
 
 export default Alltest;
+
+// /testDetails/
