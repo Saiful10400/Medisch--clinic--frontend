@@ -9,6 +9,7 @@ import Users from "../Dashbord/AdminDashbord/Users";
 import AllBanners from "../Dashbord/AdminDashbord/AllBanners";
 import AddTest from "../Dashbord/AdminDashbord/AddTest";
 import AllTest from "../Dashbord/AdminDashbord/AllTest";
+import Alltest from "../User/All test/Alltest";
 
 export const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
         path: "/dashbord",
         element: <h1>this is dashbord</h1>,
       },
+      {
+        path:"/allTest",
+        element:<Alltest></Alltest>
+      }
     ],
   },
   {
