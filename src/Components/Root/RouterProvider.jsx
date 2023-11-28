@@ -11,6 +11,10 @@ import AddTest from "../Dashbord/AdminDashbord/AddTest";
 import AllTest from "../Dashbord/AdminDashbord/AllTest";
 import Alltest from "../User/All test/Alltest";
 import TestDetails from "../User/TestDetails/TestDetails";
+import UserDashbord from "../Dashbord/UserDashbord/UserDashbord";
+import Myprifile from "../Dashbord/UserDashbord/my profile/Myprifile";
+import UpAppoinment from "../Dashbord/UserDashbord/Upcoming appoinment/UpAppoinment";
+import TestResult from "../Dashbord/UserDashbord/Test result/TestResult";
 
 export const router = createBrowserRouter([
   {
@@ -29,10 +33,7 @@ export const router = createBrowserRouter([
         path: "/register",
         element: <Register></Register>,
       },
-      {
-        path: "/dashbord",
-        element: <h1>this is dashbord</h1>,
-      },
+      
       {
         path:"/allTest",
         element:<Alltest></Alltest>
@@ -74,4 +75,21 @@ export const router = createBrowserRouter([
       
     ],
   },
+  {
+    path:"/UserDashbord",
+    element:<UserDashbord></UserDashbord>,
+    children:[{
+      path:"myProfile",
+      element:<Myprifile></Myprifile>
+    },
+    {
+      path:"upcomingAppoinment",
+      element:<UpAppoinment></UpAppoinment>
+    },
+    {
+      path:"testResult",
+      element:<TestResult></TestResult>
+    }
+  ]
+  }
 ]);
