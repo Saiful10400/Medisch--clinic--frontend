@@ -1,6 +1,7 @@
 import { FacebookAuthProvider, GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
 import React, { createContext, useEffect, useState } from 'react';
 import { auth } from '../../Authentication/firebase.config';
+import useAxiosPublic from '../custom Hooks/useAxiosPublic';
 
 
 
@@ -10,10 +11,11 @@ export const dataProvider=createContext(null)
 const DataProvider = ({children}) => {
 const[user,setuser]=useState(null)
 const[loading,setloading]=useState(false)
-
+const axiosPublic=useAxiosPublic()
 useEffect(()=>{
     const unsubscribe=onAuthStateChanged(auth,(res)=>{
         setuser(res)
+        axiosPublic.post("/jwt_token",{email:res.email},{withCredentials:true})
         setloading(false)
     })
     return ()=>{
