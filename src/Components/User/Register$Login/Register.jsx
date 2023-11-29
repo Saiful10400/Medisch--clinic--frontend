@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FaArrowCircleRight } from "react-icons/fa";
 
 // resoueces import.
@@ -13,10 +13,12 @@ import { dataProvider } from "../../Context Api/DataProvider";
 import { updateProfile } from "firebase/auth";
 import { auth } from "../../../Authentication/firebase.config";
 import useAxiosPublic from "../../custom Hooks/useAxiosPublic";
+import Swal from "sweetalert2";
 
 
 
 const Register = () => {
+  const move=useNavigate()
   const {
     register,
     handleSubmit,
@@ -136,6 +138,16 @@ const Register = () => {
         displayName: UserName,
          photoURL:photoUrl
       })
+      .then(()=>{
+        move("/UserDashbord/myProfile")
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Your work has been saved",
+          showConfirmButton: false,
+          timer: 1500
+        });
+      })
       
     })
 
@@ -166,6 +178,9 @@ const Register = () => {
     // .then(res=>console.log(res.data.display_url))
   
   };
+
+
+
 
   return (
     <div>

@@ -3,6 +3,7 @@ import useAxiosPublic from "../../custom Hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import { MdDeleteForever } from "react-icons/md";
 
+
 const AllBanners = () => {
   const axiosPublic = useAxiosPublic();
 
@@ -43,7 +44,7 @@ const VisibilityHandle=(bannerData)=>{
 }
 
   return (
-    <div>
+    <div className="w-[100vw] lg:w-[60vw] mx-auto">
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}
@@ -79,8 +80,8 @@ const VisibilityHandle=(bannerData)=>{
                 <td>
                   <span className="font-bold">{item.title}</span>
                 </td>
-                <td>
-                  <span className="bg-yellow-400 font-semibold rounded-lg text-base p-2">
+                <td className="flex flex-col justify-center items-center gap-2 lg:flex-row">
+                  <span className="bg-yellow-400 font-semibold rounded-lg lg:text-base p-1 lg:p-2">
                     {item.couponName}
                   </span>{" "}
                   for{" "}

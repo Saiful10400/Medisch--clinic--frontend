@@ -1,19 +1,29 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useAxiosPublic from "../../custom Hooks/useAxiosPublic";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import PaymentCheckout from "./PaymentCheckout";
- 
+import { dataProvider } from "../../Context Api/DataProvider";
+
 // payment method.
-
-
 
 const TestDetails = () => {
   const axiosPublic = useAxiosPublic();
+  const{user}=useContext(dataProvider)
+  const[userstatus,setUserstatus]=useState("block")
+  useEffect(()=>{
+    axiosPublic.get("/get_users")
+    .then(res=>{
+      const data=res.data
+      const result=data.find(item=>item?.email.toUpperCase()===user?.email.toUpperCase())
+      setUserstatus(result.status)
+    })
+  },[user])
+  
   const { id } = useParams();
   const [data, setData] = useState(null);
-  const [hidePayment,setHidePayment]=useState(false)
+  const [hidePayment, setHidePayment] = useState(false);
   useEffect(() => {
     axiosPublic.get(`/Single_test?id=${id}`).then((res) => setData(res.data));
   }, [axiosPublic, id]);
@@ -28,7 +38,7 @@ const TestDetails = () => {
   // apply coupon handle
 
   const [payprice, setpayPrice] = useState(0);
-  console.log("payprice", payprice);
+ 
   //
   const [enteredCode, setEnteredcode] = useState(null);
   const promocode = promo?.couponName;
@@ -45,20 +55,15 @@ const TestDetails = () => {
     // setpayPrice(data?.price);
   };
 
+  //   backend payment data sending handle.
+  // const ContinuePaymentHandle=()=>{
+  //     setHidePayment(true)
 
-//   backend payment data sending handle.
-// const ContinuePaymentHandle=()=>{
-//     setHidePayment(true)
+  // }
 
-// }
+  // stripe payment handle.
 
-
-// stripe payment handle.
-
-const stripePromise =loadStripe(import.meta.env.VITE_Payment_Gateway_PK)
-
- 
-
+  const stripePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_PK);
 
   return (
     <div className="lg:w-[1400px] mx-auto flex lg:flex-row flex-col">
@@ -67,18 +72,18 @@ const stripePromise =loadStripe(import.meta.env.VITE_Payment_Gateway_PK)
       </div>
       <div className="lg:w-1/2 flex  justify-center items-center">
         <div>
-          <h1 className="text-[38px] font-bold">Test Name: {data?.testName}</h1>
-          <h1 className="text-[20px] font-medium">
+          <h1 className="lg:text-[38px] text-3xl lg:mt-0 mt-5 font-bold">Test Name: {data?.testName}</h1>
+          <h1 className="lg:text-[20px] font-bold lg:font-medium">
             Test Description: {data?.details}
           </h1>
-          <h1 className="text-[30px] font-bold">
+          <h1 className="lg:text-[30px]  mt-4 font-bold">
             Reservation Last Date: {data?.date}
           </h1>
-          <h1 className="text-[30px] font-bold">
+          <h1 className="lg:text-[30px] font-bold">
             Total Available slots: {data?.slots}
           </h1>
-          <h1 className="text-[30px] font-bold">Price: {data?.price}</h1>
-          <button onClick={bookNowHandle} className="btn btn-secondary">
+          <h1 className="lg:text-[30px] font-bold">Price: {data?.price} Tk</h1>
+          <button disabled={userstatus==="block"} onClick={bookNowHandle} className="btn btn-secondary">
             Book Now
           </button>
         </div>
@@ -126,14 +131,14 @@ const stripePromise =loadStripe(import.meta.env.VITE_Payment_Gateway_PK)
             </form>
           </div>
           <div className={`  mt-12`}>
-            
             {/* backend payment hanle */}
             <Elements stripe={stripePromise}>
-              <PaymentCheckout discount={promo?.couponRate} price={data?.price}></PaymentCheckout>
+              <PaymentCheckout
+                discount={promo?.couponRate}
+                price={data?.price} item={data}
+              ></PaymentCheckout>
             </Elements>
-            
-            
-            </div>
+          </div>
         </div>
       </dialog>
     </div>

@@ -66,7 +66,7 @@ const searchHandle=(e)=>{
     return (
        <div>
 
-        <div className="w-[1400px] mx-auto flex justify-center items-center my-4">
+        <div className="lg:w-[1400px] mx-auto flex justify-center items-center my-4">
             <form onSubmit={searchHandle} className="border-2 p-2 border-gray-500">
             <input required name="date" className="" type="date" />
             <button className="btn ml-[30px] btn-secondary btn-sm">Search</button>
@@ -77,7 +77,7 @@ const searchHandle=(e)=>{
 
 
 
-<div className="lg:w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-4 gap-6">
+<div className="lg:w-[1400px] mx-auto grid grid-cols-1 px-8 lg:px-0 lg:grid-cols-4 gap-6">
             {data?.map(item=><div key={item._id} className="card w-full bg-base-100 shadow-xl">
   <figure><img src={item.imageUrl} alt={item.testName} /></figure>
   <div className="card-body">

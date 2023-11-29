@@ -71,7 +71,7 @@ if(item.email.toUpperCase()!==user.email.toUpperCase() && item.role!=="admin"){
 }
 
   return (
-    <div>
+    <div className="w-[100vw] lg:w-[60vw] mx-auto">
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}
@@ -115,7 +115,7 @@ if(item.email.toUpperCase()!==user.email.toUpperCase() && item.role!=="admin"){
                 </td>
                 <td>{item.bloodGroup}</td>
                 <td><button onClick={()=>activityHandle(item)} className={` btn btn-sm text-white  ${item.status==="active" ? "btn-success" : "btn-error"}`}>{item.status}</button></td>
-                <td><button onClick={()=>roleHandle(item)} className={`btn  btn-sm ${item.role==="admin"?"btn-warning":"btn-primary"}`}>{item.role==="admin"?<GiQueenCrown />:<FaRegUser />}{item.role}</button></td>
+                <td><button onClick={()=>roleHandle(item)} className={`btn  btn-sm lg:text-md  text-[11px]  ${item.role==="admin"?"btn-warning":"btn-primary"}`}>{item.role==="admin"?<GiQueenCrown />:<FaRegUser />}{item.role}</button></td>
                 <th>
                   <button
                     onClick={() => modalHandle(item)}

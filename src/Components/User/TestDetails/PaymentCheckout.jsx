@@ -3,9 +3,11 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useContext, useEffect, useState } from "react";
 import useAxiosPublic from "../../custom Hooks/useAxiosPublic";
 import { dataProvider } from './../../Context Api/DataProvider';
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
-const PaymentCheckout = ({price,discount}) => {
-     
+const PaymentCheckout = ({price,discount,item}) => {
+     const move=useNavigate()
     const axiosPublic=useAxiosPublic()
 const[paymentToken,setPaymentToken]=useState(null)
 const[error,setError]=useState("")
@@ -76,6 +78,32 @@ const[error,setError]=useState("")
     else{
         if(paymentIntent.status=== "succeeded"){
             console.log(paymentIntent)
+
+
+            // all nescessary staf will send form here.
+            console.log(item)
+            const bookedService={name:item.testName,userEmail:user.email,transectionId:paymentIntent.id,userName:user.displayName,discount,report:null,date:item.date,price:item.price,imgUrl:item.imageUrl}
+            axiosPublic.post("/add_booked_item",bookedService)
+            .then((res)=>{
+                if(res.data.acknowledged){
+                    axiosPublic.post("/decrement_item_slots",{id:item._id})
+                    .then(res=>{
+                        if(res.data.acknowledged){
+                            move("/UserDashbord/upcomingAppoinment")
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: "Your Payment successfull.",
+                                showConfirmButton: false,
+                                timer: 1500
+                              });
+
+                        }
+                    })
+                     
+                }
+            })
+
         }
     }
 

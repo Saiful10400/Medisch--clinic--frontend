@@ -8,6 +8,7 @@ import { MdPostAdd } from "react-icons/md";
 import { FaListCheck } from "react-icons/fa6";
 import { FaUsers } from "react-icons/fa";
 import { IoHomeSharp } from "react-icons/io5";
+import { IoMdMenu } from "react-icons/io";
 
 const AdminDashbord = () => {
   // list style.
@@ -17,14 +18,14 @@ const AdminDashbord = () => {
       <div className="drawer lg:drawer-open">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content flex flex-col items-center justify-center">
-         <div>
+         <div className="mt-[70px] lg:mt-0">
           <Outlet></Outlet>
          </div>
           <label
             htmlFor="my-drawer-2"
-            className="btn btn-primary drawer-button lg:hidden absolute top-0 left-0"
+            className="btn btn-primary drawer-button rounded-none lg:hidden fixed w-full  top-0 left-0"
           >
-            Open drawer
+          <span className="flex gap-3 items-center text-xl"> <span className="text-3xl"><IoMdMenu /></span> Menu</span>
           </label>
         </div>
         <div className="drawer-side">

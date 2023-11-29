@@ -75,7 +75,7 @@ const modalHandle=(data)=>{
 }
 
   return (
-    <div>
+    <div className="w-[100vw] lg:w-[60vw] mx-auto">
       <div className="overflow-x-auto">
         <table className="table table-zebra">
           {/* head */}

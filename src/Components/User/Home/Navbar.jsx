@@ -1,26 +1,34 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { dataProvider } from "../../Context Api/DataProvider";
+import logo from "../../../../public/image/logo.webp";
 
 const Navbar = () => {
-  const{user,logout}=useContext(dataProvider)
+  const [show, setShow] = useState(false);
+  const { user, logout } = useContext(dataProvider);
   const li = (
     <>
-      <li><NavLink to={"/"}>Home</NavLink></li>
-      <li><NavLink to={"/login"}>Login</NavLink></li>
-      <li><NavLink to={"/adminDashbord/allUsers"}>Admin Dashbord</NavLink></li>
-      <li><NavLink to={"/UserDashbord/myProfile"}>Dashbord</NavLink></li>
+      <li>
+        <NavLink to={"/"}>Home</NavLink>
+      </li>
+      <li>
+        <NavLink to={"/login"}>Login</NavLink>
+      </li>
+      <li>
+        <NavLink to={"/adminDashbord/allUsers"}>Admin Dashbord</NavLink>
+      </li>
+      <li>
+        <NavLink to={"/UserDashbord/myProfile"}>Dashbord</NavLink>
+      </li>
     </>
   );
 
- 
-
   // logout handle.
 
-  const logoutHandle=()=>{
-    logout()
-  }
-
+  const logoutHandle = () => {
+    logout();
+  };
+window.onclick=()=>setShow(false)
   return (
     <div>
       <div className="navbar bg-base-100">
@@ -49,20 +57,41 @@ const Navbar = () => {
               {li}
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl">daisyUI</a>
+          <a className="btn btn-ghost text-xl">
+            <img src={logo} alt="" />
+          </a>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1 flex gap-6 text-lg">{li}</ul>
         </div>
 
         {/* end side logo and name. */}
-        <div className="navbar-end flex gap-1">
-         <div className="w-[50px] h-[50px]">
-          <img src={user?.photoURL} className="w-full h-full object-contain" alt="" />
-         </div>
-         <h1>{user?.displayName}</h1>
-         <button onClick={logoutHandle} className="btn btn-sm btn-primary">logout</button>
-        </div>
+        <div className="navbar-end flex gap-1 relative">
+          <button
+            onClick={(e) =>{
+              setShow(!show)
+              e.stopPropagation()
+            }}
+            className="w-[60px] h-[60px] rounded-full border-2 "
+          >
+            <img
+              src={user?.photoURL}
+              className="w-full h-full object-cover rounded-full"
+              alt=""
+            />
+          </button>
+
+          <div className={`w-[250px] rounded-xl h-[250px] absolute top-[76px] right-0 z-50 bg-[#e12453] ${show? "" : "hidden"} flex flex-col items-center gap-4`}>
+            <h1 className="mt-4 font-bold text-white">Name: {user?.displayName}</h1>
+            <h1 className="  font-bold text-white">E-mail: {user?.email}</h1>
+            <button onClick={logoutHandle} className="btn  btn-primary">
+              logout
+            </button>
+          </div>
+        </div> 
+
+
+
 
 
       </div>

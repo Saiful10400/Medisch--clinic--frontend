@@ -47,9 +47,9 @@ const Myprifile = () => {
         .then(res=>console.log(res.data))
     }
     return (
-        <div className='w-4/5  h-[90vh]'>
-           <div className=' w-full  flex flex-col lg:flex-row lg:gap-5 '>
-            <div className=' w-1/5  flex flex-col items-center gap-5'>
+        <div className='lg:w-8/12 lg:mx-auto h-[90vh]'>
+           <div className=' w-full  flex flex-col lg:flex-row gap-12 lg:gap-5 '>
+            <div className=' lg:w-1/5  flex flex-col items-center gap-5'>
                 <img className='w-[200px] h-[200px] rounded-full object-cover' src={userData?.photoUrl} alt="" />
                 <button onClick={EditprofileHandle} className='btn btn-warning'>Edit profile</button>
             </div>
