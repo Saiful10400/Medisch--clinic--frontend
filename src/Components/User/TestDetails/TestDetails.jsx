@@ -13,7 +13,7 @@ const TestDetails = () => {
   const{user}=useContext(dataProvider)
   const[userstatus,setUserstatus]=useState("block")
   useEffect(()=>{
-    axiosPublic.get("/get_users")
+    axiosPublic.get(`/get_users?email=${user?.email}`,{withCredentials:true})
     .then(res=>{
       const data=res.data
       const result=data.find(item=>item?.email.toUpperCase()===user?.email.toUpperCase())

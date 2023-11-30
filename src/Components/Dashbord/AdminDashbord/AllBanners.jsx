@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import useAxiosPublic from "../../custom Hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import { MdDeleteForever } from "react-icons/md";
+import { dataProvider } from "../../Context Api/DataProvider";
+ 
 
 
 const AllBanners = () => {
   const axiosPublic = useAxiosPublic();
-
+const{user}=useContext(dataProvider)
   // const{data:users=[],refetch}=useQuery({
   //     queryKey:['users'],
   //     queryFn:async()=>{
@@ -18,7 +20,7 @@ const AllBanners = () => {
   const { data: banners = [], refetch } = useQuery({
     queryKey: ["banners"],
     queryFn: async () => {
-      const res = await axiosPublic.get("/get_banners");
+      const res = await axiosPublic.get(`/get_banners?email=${user.email}`,{withCredentials:true});
       return res.data;
     },
   });

@@ -1,4 +1,4 @@
-import {  useContext, useState } from "react";
+import {  useContext, useEffect, useState } from "react";
 import useAxiosPublic from "../../custom Hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import { GiQueenCrown } from "react-icons/gi";
@@ -24,12 +24,12 @@ const Users = () => {
 const{data:users=[],refetch}=useQuery({
   queryKey:['users'],
   queryFn:async()=>{
-    const res=await axiosPublic.get("/get_users")
+    const res=await axiosPublic.get(`/get_users?email=${user.email}`,{withCredentials:true})
     return res.data
   }
 })
 
-
+ 
 
 
   // modal handle.

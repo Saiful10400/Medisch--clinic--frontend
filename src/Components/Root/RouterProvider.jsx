@@ -15,6 +15,8 @@ import UserDashbord from "../Dashbord/UserDashbord/UserDashbord";
 import Myprifile from "../Dashbord/UserDashbord/my profile/Myprifile";
 import UpAppoinment from "../Dashbord/UserDashbord/Upcoming appoinment/UpAppoinment";
 import TestResult from "../Dashbord/UserDashbord/Test result/TestResult";
+import AdminRoute from "../Roleathenticate/AdminRoute";
+import Reservation from "../Dashbord/AdminDashbord/Reservation";
 
 export const router = createBrowserRouter([
   {
@@ -46,6 +48,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/adminDashbord",
+    // element: <AdminRoute><AdminDashbord></AdminDashbord></AdminRoute>,
     element: <AdminDashbord></AdminDashbord>,
     children: [
       {
@@ -70,7 +73,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "resurvation",
-        element: <h1>banner</h1>,
+        element:<Reservation></Reservation>,
       },
       
     ],

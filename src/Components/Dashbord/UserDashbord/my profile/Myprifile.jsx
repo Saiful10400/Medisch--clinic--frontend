@@ -12,7 +12,7 @@ const Myprifile = () => {
     useEffect(()=>{
         if(user){
             
-           axiosPublic.post("/single_userdata",{email:user.email})
+           axiosPublic.post("/single_userdata",{email:user.email},{withCredentials:true})
            .then(res=>{
             const newdata=res.data.find(item=>item.email.toUpperCase()===user.email.toUpperCase())
             setUser(newdata)

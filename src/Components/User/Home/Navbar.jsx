@@ -67,7 +67,7 @@ window.onclick=()=>setShow(false)
 
         {/* end side logo and name. */}
         <div className="navbar-end flex gap-1 relative">
-          <button
+          <button disabled={user? false :true}
             onClick={(e) =>{
               setShow(!show)
               e.stopPropagation()
@@ -75,7 +75,7 @@ window.onclick=()=>setShow(false)
             className="w-[60px] h-[60px] rounded-full border-2 "
           >
             <img
-              src={user?.photoURL}
+              src={user?.photoURL|| "https://cdn-icons-png.flaticon.com/512/219/219983.png"}
               className="w-full h-full object-cover rounded-full"
               alt=""
             />
@@ -84,9 +84,11 @@ window.onclick=()=>setShow(false)
           <div className={`w-[250px] rounded-xl h-[250px] absolute top-[76px] right-0 z-50 bg-[#e12453] ${show? "" : "hidden"} flex flex-col items-center gap-4`}>
             <h1 className="mt-4 font-bold text-white">Name: {user?.displayName}</h1>
             <h1 className="  font-bold text-white">E-mail: {user?.email}</h1>
-            <button onClick={logoutHandle} className="btn  btn-primary">
-              logout
-            </button>
+           {
+            user &&  <button onClick={logoutHandle} className="btn  btn-primary">
+            logout
+          </button>
+           }
           </div>
         </div> 
 
