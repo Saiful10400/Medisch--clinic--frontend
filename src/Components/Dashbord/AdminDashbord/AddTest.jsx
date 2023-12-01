@@ -1,6 +1,7 @@
 import { FaCloudUploadAlt } from "react-icons/fa";
 import useAxiosPublic from "../../custom Hooks/useAxiosPublic";
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 
 
 const AddTest = () => {
@@ -19,6 +20,8 @@ const AddTest = () => {
     // form handle.
 
     const formhandle = (data) => {
+  
+
        const testName=data.testName
        const price=parseInt(data.price)
        const imageUrl=data.imgUrl
@@ -31,7 +34,15 @@ const AddTest = () => {
        
      
        axiosPublic.post("/Add_test",{testName,price,imageUrl,details,date,slots,reservation})
-       .then(res=>console.log(res.data))
+       .then(()=>{
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "A new test has added.",
+          showConfirmButton: false,
+          timer: 1500
+        });
+       })
       };
     return (
         <div>

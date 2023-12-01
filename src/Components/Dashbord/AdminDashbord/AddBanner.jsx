@@ -4,8 +4,11 @@ import upload from "../../../../public/image/upload.jpg";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import useAxiosPublic from "../../custom Hooks/useAxiosPublic";
 import Preloader from "../../shared components/preloader";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const AddBanner = () => {
+  const move=useNavigate()
   let inputStyle =
     "w-[290px] lg:w-[460px] h-[40px] py-[10px] px-[20px] text-base font-semibold bg-[#EBF5F5] focus:outline-none rounded-md";
 
@@ -73,9 +76,18 @@ const AddBanner = () => {
               isActive,
               url,
             })
-            .then((res) => {
-              console.log(res.data)
+            .then(() => {
+              
               setHide(false)
+              move("/")
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Banner uploaded successfully.",
+                showConfirmButton: false,
+                timer: 1500
+              });
+
             });
         }
       });

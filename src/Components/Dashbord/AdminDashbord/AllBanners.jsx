@@ -3,6 +3,7 @@ import useAxiosPublic from "../../custom Hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import { MdDeleteForever } from "react-icons/md";
 import { dataProvider } from "../../Context Api/DataProvider";
+import Swal from "sweetalert2";
  
 
 
@@ -38,11 +39,32 @@ const VisibilityHandle=(bannerData)=>{
 
  //  banner delete handle.
  const bannerDeleteHandle=(arg)=>{
-  axiosPublic.post("/delete_banner",{id:arg._id})
+
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!"
+  }).then((result) => {
+    if (result.isConfirmed) {
+
+      axiosPublic.post("/delete_banner",{id:arg._id})
   .then(res=>{
     console.log(res)
     refetch()
+    Swal.fire({
+      title: "Deleted!",
+      text: "Your banner has been deleted.",
+      icon: "success"
+    });
   })
+      
+    }
+  });
+  
 }
 
   return (

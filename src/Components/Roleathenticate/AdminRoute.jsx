@@ -1,26 +1,39 @@
-import React, { useContext, useEffect, useState } from 'react';
-import useAxiosPublic from '../custom Hooks/useAxiosPublic';
-import { dataProvider } from '../Context Api/DataProvider';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useQuery } from "@tanstack/react-query";
+import { useContext, useEffect } from "react";
+import useAxiosPublic from "../custom Hooks/useAxiosPublic";
+import { dataProvider } from "../Context Api/DataProvider";
+import loadinggif from "../../../public/image/loading.gif"
  
-
-
 const AdminRoute = ({children}) => {
-    const move=useNavigate()
     const axiosPublic=useAxiosPublic()
     const{user}=useContext(dataProvider)
-    axiosPublic.post("/single_userdata",{email:user?.email},{withCredentials:true})
-        .then(res=>{
-         const newdata=res.data.find(item=>item.email.toUpperCase()===user?.email.toUpperCase())
-         if(newdata.role==="admin"){
-            console.log("hellow want")
-            return children
-         }
-         console.log(newdata)
-        //  move("/")
-
-         return children
-        })
+    const{data:userdata,refetch,isPending:isLoading}=useQuery({
+        queryKey:["isAdmin"],
+        queryFn:async()=>{
+             
+                const res=await axiosPublic.get(`/get_users_admin` )
+            const data=res.data
+            const actualUser=data.find(item=>item.email.toUpperCase()===user.email.toUpperCase())
+            console.log(actualUser)
+            return actualUser
+           
+            // const filterData=data.find(item=>item.emai.toUpperCase()===user.email.toUpperCase())
+            // console.log(filterData)
+            // return res.data
+             
+        }
+    })
+    console.log(userdata?.role)
+    refetch()
+    if(userdata?.role==="admin" && user){
+         
+        return children
+    }
+    else if(!userdata){
+        return  <div className="w-full bg-white fixed top-0 left-0 h-screen flex justify-center items-center">
+        <img src={loadinggif} alt="" />
+    </div>
+    }
 };
 
 export default AdminRoute;

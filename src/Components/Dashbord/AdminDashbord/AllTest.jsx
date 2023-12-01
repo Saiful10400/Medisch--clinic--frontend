@@ -4,6 +4,7 @@ import { useState } from "react";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const AllTest = () => {
   const axiosPublic = useAxiosPublic();
@@ -24,19 +25,59 @@ const AllTest = () => {
     //   console.log(res);
     //   refetch();
     // });
-    setModal(arg)
+
+    Swal.fire({
+      title: "Warning!!",
+      text: "If you don't change all field,update will not acceptable.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "ok"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setModal(arg)
     
     document.getElementById('my_modal_3').showModal()
+      }
+    });
+
+    
+    
 
   };
 
   //   dlete handle.
 
   const deleteHandle = (arg) => {
-    axiosPublic.post("/delete_test", { id: arg._id }).then((res) => {
-      refetch();
-      console.log(res.data);
+
+
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosPublic.post("/delete_test", { id: arg._id }).then(() => {
+          refetch();
+          Swal.fire({
+            title: "Deleted!",
+            text: "Your file has been deleted.",
+            icon: "success"
+          });
+          
+        });
+        
+      }
     });
+
+
+    
   };
   let inputStyle =
   "w-[290px] lg:w-[460px] h-[40px] py-[10px] px-[20px] text-base font-semibold bg-[#EBF5F5] focus:outline-none rounded-md";
@@ -48,7 +89,7 @@ const AllTest = () => {
     formState: { errors },
   } = useForm();
 //   modal handle.
-const navigate=useNavigate()
+ 
 const modalHandle=(data)=>{
 
     const testName=data.testName
@@ -64,10 +105,17 @@ const modalHandle=(data)=>{
 
    if(testName && price && imageUrl && details && date && slots){
     axiosPublic.post("/update_test",{testName,price,imageUrl,details,date,slots,id})
-   .then(res=>{
-    console.log(res.data)
+   .then(()=>{
+     
     refetch()
-    alert("done")
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Test details has updated.",
+      showConfirmButton: false,
+      timer: 1500
+    });
+
    })
    }
 

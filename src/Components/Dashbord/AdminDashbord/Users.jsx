@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { GiQueenCrown } from "react-icons/gi";
 import { FaRegUser } from "react-icons/fa";
 import { dataProvider } from "../../Context Api/DataProvider";
+import Swal from "sweetalert2";
 
 const Users = () => {
   // const [users, setUsers] = useState([]);
@@ -42,16 +43,40 @@ const{data:users=[],refetch}=useQuery({
 //   user activity handle.
 
 const activityHandle=(userData)=>{
-    let status=null
-    if(userData.status==="active"){
-        status="block"
-    }
-    else if(userData.status==="block"){
-        status="active"
-    }
 
-    axiosPublic.patch("/update_user",{email:userData.email,status})
-    .then(()=>refetch())
+console.log(userData)
+    Swal.fire({
+      title: "Are you sure?",
+      text: userData.status==="active" ? `block ${userData.name}.` : `Unblock ${userData.name}`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes"
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+
+        let status=null
+        if(userData.status==="active"){
+            status="block"
+        }
+        else if(userData.status==="block"){
+            status="active"
+        }
+    
+        axiosPublic.patch("/update_user",{email:userData.email,status})
+        .then(()=>{
+          refetch()
+          Swal.fire({
+            title: "Done!",
+            text: "",
+            icon: "success"
+          });
+        })
+  
+      }
+    });
 }
 
 // role handle.
@@ -61,11 +86,35 @@ const roleHandle=(item)=>{
 if(item.email.toUpperCase()!==user.email.toUpperCase() && item.role!=="admin"){
   // change the role.
 
-  axiosPublic.patch("/role_update",{email:item.email})
-  .then(res=>{
-    console.log(res.data)
-    refetch()
-  })
+
+
+  Swal.fire({
+    title: "Are you sure?",
+    text: "",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes!"
+  }).then((result) => {
+    if (result.isConfirmed) {
+
+
+      axiosPublic.patch("/role_update",{email:item.email})
+      .then(res=>{
+        console.log(res.data)
+        refetch()
+        Swal.fire({
+          title: "Promoted!",
+          text: "",
+          icon: "success"
+        });
+      })
+      
+    }
+  });
+
+
   
 }
 }

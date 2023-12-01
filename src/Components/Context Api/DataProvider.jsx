@@ -10,7 +10,7 @@ export const dataProvider=createContext(null)
 
 const DataProvider = ({children}) => {
 const[user,setuser]=useState(null)
-const[loading,setloading]=useState(false)
+const[loading,setloading]=useState(true)
 const axiosPublic=useAxiosPublic()
 useEffect(()=>{
     const unsubscribe=onAuthStateChanged(auth,(res)=>{
