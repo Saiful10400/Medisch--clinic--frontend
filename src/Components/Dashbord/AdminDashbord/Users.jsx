@@ -118,6 +118,16 @@ if(item.email.toUpperCase()!==user.email.toUpperCase() && item.role!=="admin"){
   
 }
 }
+const[newdata,setnewdata]=useState([])
+// pagination logics.
+const elements=[]
+const userlangth=users.length
+const loopwillrun=Math.ceil(userlangth/5)
+for(let i=1;i<=loopwillrun;i++){
+  elements.push(i)
+}
+
+// 
 
   return (
     <div className="w-[100vw] lg:w-[60vw] mx-auto">
@@ -136,7 +146,7 @@ if(item.email.toUpperCase()!==user.email.toUpperCase() && item.role!=="admin"){
             </tr>
           </thead>
           <tbody>
-            {users.map((item, idx) => (
+            {newdata.map((item, idx) => (
               <tr key={idx}>
                 <td>{++idx}</td>
                 <td>
@@ -256,6 +266,14 @@ if(item.email.toUpperCase()!==user.email.toUpperCase() && item.role!=="admin"){
           </div>
         </div>
       </dialog>
+      {/* pagination. */}
+      <div className="flex justify-center items-center gap-5 py-5">
+        {
+          elements.map(item=><div key={item}>
+            <button onClick={()=>console.log(users.slice(0,5))} className="btn btn-primary">{item}</button>
+          </div>)
+        }
+      </div>
     </div>
   );
 };

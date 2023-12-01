@@ -52,7 +52,7 @@ const TestResult = () => {
                    {item.name}
                   </td>
                   <td>
-                   <a href={item.report? item.report : ""}><button className='btn btn-success btn-sm text-white'>Download</button></a>
+                   <a  href={item.report? item.report : ""}><button className='btn btn-success btn-sm text-white'>Download</button></a>
                   </td>
                     
                 </tr>)

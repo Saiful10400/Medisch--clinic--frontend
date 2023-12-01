@@ -18,6 +18,9 @@ import TestResult from "../Dashbord/UserDashbord/Test result/TestResult";
 import AdminRoute from "../Roleathenticate/AdminRoute";
 import Reservation from "../Dashbord/AdminDashbord/Reservation";
 import PrivateRoute from "../Roleathenticate/PrivateRoute";
+import Doctors from "../User/Exraroutes/Doctors";
+import Blogs from "../User/Exraroutes/Blogs";
+import Contact from "../User/Exraroutes/Contact";
 
 export const router = createBrowserRouter([
   {
@@ -44,6 +47,18 @@ export const router = createBrowserRouter([
       {
         path:"/testDetails/:id",
         element:<TestDetails></TestDetails>
+      },
+      {
+        path:"/Doctors",
+        element:<Doctors></Doctors>
+      },
+      {
+        path:"/blogs",
+        element:<Blogs></Blogs>
+      },
+      {
+        path:"/Contact",
+        element:<Contact></Contact>
       }
     ],
   },

@@ -4,11 +4,13 @@ import Avatar from "../../../../public/image/registerAvatar.png";
 import google from "../../../../public/image/google.png";
 import facebook from "../../../../public/image/facebook.png";
 import { useForm } from "react-hook-form";
-import { NavLink } from "react-router-dom";
-import { useContext } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
 import { dataProvider } from "../../Context Api/DataProvider";
 
 const Login = () => {
+  const[error,seterror]=useState(null)
+  const move=useNavigate()
   const {
     register,
     handleSubmit,
@@ -32,7 +34,10 @@ console.log(user)
     const password=data.password
 
     emailLogin(email,password)
-    .then(res=>console.log(res))
+    .then(()=>move("/"))
+    .catch(err=>{
+      seterror(err.message.split(":")[1].split(" ")[2])
+    })
 
   };
 
@@ -79,19 +84,20 @@ console.log(user)
                     Login by entering the information below
                   </h1>
                 </div>
-                <input
+                <input onClick={()=>seterror(null)}
                   className={inputStyle}
                   type="text"
                   {...register("email", { required: true })}
                   placeholder="Your Email"
                 />
 
-                <input
+                <input onClick={()=>seterror(null)}
                   {...register("password", { required: true })}
                   className={inputStyle}
                   type="password"
                   placeholder="Password"
                 />
+                <p className={`font-bold text-red-600 ${error?"":"hidden"}`}>{error}</p>
 
                 <button
                   className="btn w-[134px] h-[40px] text-base font-normal bg-[#E12454] text-white rounded-[30px]"

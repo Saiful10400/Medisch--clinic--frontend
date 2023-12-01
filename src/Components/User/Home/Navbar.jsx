@@ -2,10 +2,33 @@ import { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { dataProvider } from "../../Context Api/DataProvider";
 import logo from "../../../../public/image/logo.webp";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "../../custom Hooks/useAxiosPublic";
 
 const Navbar = () => {
   const [show, setShow] = useState(false);
   const { user, logout } = useContext(dataProvider);
+
+  // admin route check.
+  const axiosPublic = useAxiosPublic();
+  const {
+    data: userdata,
+    refetch,
+    isPending: isLoading,
+  } = useQuery({
+    queryKey: ["isAdmin", user?.email],
+    queryFn: async () => {
+      const res = await axiosPublic.get(`/get_users_admin`);
+      const data = res.data;
+      const actualUser = data.find(
+        (item) => item?.email.toUpperCase() === user?.email.toUpperCase()
+      );
+      console.log(actualUser);
+      return actualUser;
+    },
+  });
+  console.log(userdata)
+
   const li = (
     <>
       <li>
@@ -14,11 +37,24 @@ const Navbar = () => {
       <li>
         <NavLink to={"/login"}>Login</NavLink>
       </li>
-      <li>
+      {
+        userdata?.role==="admin" && <li>
         <NavLink to={"/adminDashbord/allUsers"}>Admin Dashbord</NavLink>
       </li>
-      <li>
+      }
+      {
+        user && <li>
         <NavLink to={"/UserDashbord/myProfile"}>Dashbord</NavLink>
+      </li>
+      }
+      <li>
+        <NavLink to={"/Doctors"}>Doctors</NavLink>
+      </li>
+      <li>
+        <NavLink to={"/Blogs"}>Blogs</NavLink>
+      </li>
+      <li>
+        <NavLink to={"/Contact"}>Contact</NavLink>
       </li>
     </>
   );
@@ -28,7 +64,7 @@ const Navbar = () => {
   const logoutHandle = () => {
     logout();
   };
-window.onclick=()=>setShow(false)
+  window.onclick = () => setShow(false);
   return (
     <div>
       <div className="navbar bg-base-100">
@@ -67,35 +103,40 @@ window.onclick=()=>setShow(false)
 
         {/* end side logo and name. */}
         <div className="navbar-end flex gap-1 relative">
-          <button disabled={user? false :true}
-            onClick={(e) =>{
-              setShow(!show)
-              e.stopPropagation()
+          <button
+            disabled={user ? false : true}
+            onClick={(e) => {
+              setShow(!show);
+              e.stopPropagation();
             }}
             className="w-[60px] h-[60px] rounded-full border-2 "
           >
             <img
-              src={user?.photoURL|| "https://cdn-icons-png.flaticon.com/512/219/219983.png"}
+              src={
+                user?.photoURL ||
+                "https://cdn-icons-png.flaticon.com/512/219/219983.png"
+              }
               className="w-full h-full object-cover rounded-full"
               alt=""
             />
           </button>
 
-          <div className={`w-[250px] rounded-xl h-[250px] absolute top-[76px] right-0 z-50 bg-[#e12453] ${show? "" : "hidden"} flex flex-col items-center gap-4`}>
-            <h1 className="mt-4 font-bold text-white">Name: {user?.displayName}</h1>
+          <div
+            className={`w-[250px] rounded-xl h-[250px] absolute top-[76px] right-0 z-50 bg-[#e12453] ${
+              show ? "" : "hidden"
+            } flex flex-col items-center gap-4`}
+          >
+            <h1 className="mt-4 font-bold text-white">
+              Name: {user?.displayName}
+            </h1>
             <h1 className="  font-bold text-white">E-mail: {user?.email}</h1>
-           {
-            user &&  <button onClick={logoutHandle} className="btn  btn-primary">
-            logout
-          </button>
-           }
+            {user && (
+              <button onClick={logoutHandle} className="btn  btn-primary">
+                logout
+              </button>
+            )}
           </div>
-        </div> 
-
-
-
-
-
+        </div>
       </div>
     </div>
   );

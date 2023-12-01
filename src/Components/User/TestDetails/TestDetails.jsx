@@ -66,7 +66,8 @@ const TestDetails = () => {
   const stripePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_PK);
 
   return (
-    <div className="lg:w-[1400px] mx-auto flex lg:flex-row flex-col">
+    <div className="w-full h-[80vh] flex justify-center items-center">
+      <div className="lg:w-[1400px] mx-auto flex lg:flex-row flex-col">
       <div className="lg:w-1/2">
         <img className="w-full object-contain" src={data?.imageUrl} alt="" />
       </div>
@@ -83,7 +84,7 @@ const TestDetails = () => {
             Total Available slots: {data?.slots}
           </h1>
           <h1 className="lg:text-[30px] font-bold">Price: {data?.price} Tk</h1>
-          <button disabled={userstatus==="block"} onClick={bookNowHandle} className="btn btn-secondary">
+          <button disabled={userstatus==="block"&&data?.slots>=1? true:false} onClick={bookNowHandle} className="btn btn-secondary">
             Book Now
           </button>
         </div>
@@ -141,6 +142,7 @@ const TestDetails = () => {
           </div>
         </div>
       </dialog>
+    </div>
     </div>
   );
 };
