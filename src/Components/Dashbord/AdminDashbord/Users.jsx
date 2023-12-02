@@ -25,7 +25,7 @@ const Users = () => {
 const{data:users=[],refetch}=useQuery({
   queryKey:['users'],
   queryFn:async()=>{
-    const res=await axiosPublic.get(`/get_users?email=${user.email}`,{withCredentials:true})
+    const res=await axiosPublic.get(`/get_users?email=${user?.email}`,{withCredentials:true})
     return res.data
   }
 })
@@ -65,7 +65,7 @@ console.log(userData)
             status="active"
         }
     
-        axiosPublic.patch("/update_user",{email:userData.email,status})
+        axiosPublic.patch("/update_user",{email:userData?.email,status})
         .then(()=>{
           refetch()
           Swal.fire({
@@ -83,7 +83,7 @@ console.log(userData)
 
 const roleHandle=(item)=>{
 
-if(item.email.toUpperCase()!==user.email.toUpperCase() && item.role!=="admin"){
+if(item.email.toUpperCase()!==user?.email.toUpperCase() && item.role!=="admin"){
   // change the role.
 
 
@@ -100,7 +100,7 @@ if(item.email.toUpperCase()!==user.email.toUpperCase() && item.role!=="admin"){
     if (result.isConfirmed) {
 
 
-      axiosPublic.patch("/role_update",{email:item.email})
+      axiosPublic.patch("/role_update",{email:item?.email})
       .then(res=>{
         console.log(res.data)
         refetch()
@@ -118,14 +118,7 @@ if(item.email.toUpperCase()!==user.email.toUpperCase() && item.role!=="admin"){
   
 }
 }
-const[newdata,setnewdata]=useState([])
-// pagination logics.
-const elements=[]
-const userlangth=users.length
-const loopwillrun=Math.ceil(userlangth/5)
-for(let i=1;i<=loopwillrun;i++){
-  elements.push(i)
-}
+
 
 // 
 
@@ -146,7 +139,7 @@ for(let i=1;i<=loopwillrun;i++){
             </tr>
           </thead>
           <tbody>
-            {newdata.map((item, idx) => (
+            {users.map((item, idx) => (
               <tr key={idx}>
                 <td>{++idx}</td>
                 <td>
@@ -166,7 +159,7 @@ for(let i=1;i<=loopwillrun;i++){
                   </div>
                 </td>
                 <td>
-                  {item.email}
+                  {item?.email}
                   <br />
                   <span className="badge badge-ghost badge-sm">
                     {`${item.upazila} , ${item.district}`}
@@ -267,13 +260,7 @@ for(let i=1;i<=loopwillrun;i++){
         </div>
       </dialog>
       {/* pagination. */}
-      <div className="flex justify-center items-center gap-5 py-5">
-        {
-          elements.map(item=><div key={item}>
-            <button onClick={()=>console.log(users.slice(0,5))} className="btn btn-primary">{item}</button>
-          </div>)
-        }
-      </div>
+      
     </div>
   );
 };

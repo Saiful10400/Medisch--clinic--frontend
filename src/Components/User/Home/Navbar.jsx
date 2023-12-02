@@ -34,16 +34,18 @@ const Navbar = () => {
       <li>
         <NavLink to={"/"}>Home</NavLink>
       </li>
-      <li>
+      {
+        !user&&<li>
         <NavLink to={"/login"}>Login</NavLink>
       </li>
+      }
       {
         userdata?.role==="admin" && <li>
         <NavLink to={"/adminDashbord/allUsers"}>Admin Dashbord</NavLink>
       </li>
       }
       {
-        user && <li>
+        user && userdata?.status==="active" && <li>
         <NavLink to={"/UserDashbord/myProfile"}>Dashbord</NavLink>
       </li>
       }

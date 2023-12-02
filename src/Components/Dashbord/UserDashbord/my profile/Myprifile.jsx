@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import useAxiosPublic from '../../../custom Hooks/useAxiosPublic';
 import { dataProvider } from '../../../Context Api/DataProvider';
+import Swal from 'sweetalert2';
 
 const Myprifile = () => {
 
@@ -8,19 +9,20 @@ const Myprifile = () => {
     const[userData,setUser]=useState({})
     const{user}=useContext(dataProvider)
    
-    
+    const[reload,setreload]=useState(false)
     useEffect(()=>{
         if(user){
-            
-           axiosPublic.post("/single_userdata",{email:user.email},{withCredentials:true})
+            console.log(user?.email)
+           axiosPublic.post("/single_userdata",{email:user?.email},{withCredentials:true})
            .then(res=>{
-            const newdata=res.data.find(item=>item.email.toUpperCase()===user.email.toUpperCase())
+            console.log(res.data)
+            const newdata=res.data.find(item=>item.email.toUpperCase()===user?.email.toUpperCase())
             setUser(newdata)
            })
             
         }
-    },[user,axiosPublic])
-    console.log(userData)
+    },[user,axiosPublic,reload])
+    console.log({setuserdata:userData})
 
     // edit profile handele.
     let inputStyle =
@@ -44,7 +46,16 @@ const Myprifile = () => {
         // console.log({name,bloodGorup,upazila,district})
         // console.log({name,bloodGorup,upazila,district})
         axiosPublic.patch("/single_userUpdate",{name,bloodGorup,upazila,district,id})
-        .then(res=>console.log(res.data))
+        .then(()=>{
+            setreload(!reload)
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Your profile updated.",
+                showConfirmButton: false,
+                timer: 1500
+              });
+        })
     }
     return (
         <div className='lg:w-8/12 lg:mx-auto h-[90vh]'>

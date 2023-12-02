@@ -19,12 +19,12 @@ const Blogs = () => {
 
 
 
-      <div className="lg:w-[1400px] flex flex-col gap-11 mx-auto my-6">
+      <div className="lg:w-[1400px] flex flex-col gap-11 lg:mx-auto my-6 ">
         {data.map((item, idx) => (
           <div key={idx} className="bg-[#ebf5f5] py-4 px-5">
             <h1 className="text-xl font-bold mb-5">Blog: {idx}</h1>
             <h1 className="font-bold text-3xl mb-2">{item.blogTitle}</h1>
-            <div className="flex items-center gap-10 mb-14">
+            <div className="flex items-center lg:gap-10 mb-14">
               <span className="flex gap-2">
                 <CiUser /> {item.authorName}
               </span>{" "}
@@ -40,7 +40,7 @@ const Blogs = () => {
             <hr />
             <div className="flex items-center justify-start gap-10 py-10">
             <span className="text-xl"><FaTags /></span>
-            <div className="flex gap-3">
+            <div className="flex lg:flex-row flex-col gap-3">
                 {
                     item.blogTags.map((tag,idx)=><span className="bg-gray-600 text-white px-1 rounded-md" key={idx}>{tag}</span>)
                 }

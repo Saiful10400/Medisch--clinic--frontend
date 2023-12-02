@@ -19,7 +19,7 @@ const Featured = () => {
   useEffect(() => {
     if (user) {
       axiosPublic
-        .get(`/booked_data?email=${user.email}`)
+        .get(`/booked_data?email=${user?.email}`)
         .then((res) => setData(res.data));
     }
   }, [user, axiosPublic]);

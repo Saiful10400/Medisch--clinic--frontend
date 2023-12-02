@@ -15,7 +15,7 @@ const axiosPublic=useAxiosPublic()
 useEffect(()=>{
     const unsubscribe=onAuthStateChanged(auth,(res)=>{
         setuser(res)
-        axiosPublic.post("/jwt_token",{email:res.email},{withCredentials:true})
+        axiosPublic.post("/jwt_token",{email:res?.email},{withCredentials:true})
         setloading(false)
     })
     return ()=>{

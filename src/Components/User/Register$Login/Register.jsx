@@ -143,7 +143,7 @@ const Register = () => {
         Swal.fire({
           position: "top-end",
           icon: "success",
-          title: "Your work has been saved",
+          title: "Sucessfully registered.",
           showConfirmButton: false,
           timer: 1500
         });
@@ -188,7 +188,7 @@ const Register = () => {
       
         <img src={loading} alt="" />
       </div>
-      <div className={`flex flex-col lg:flex-row h-[calc(100vh-76px)] relative z-0  ${!preload? "block" :"hidden"}`}>
+      <div className={`flex flex-col lg:flex-row lg:h-[calc(100vh-76px)] relative z-0  ${!preload? "block" :"hidden"}`}>
         <div className="lg:w-1/3  flex relative">
           <img
             className="absolute bottom-0 left-[50px] h-[483px] hidden lg:block"

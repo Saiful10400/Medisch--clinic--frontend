@@ -10,7 +10,7 @@ const UpAppoinment = () => {
   useEffect(() => {
     if (user) {
       axiosPublic
-        .get(`/booked_data?email=${user.email}`)
+        .get(`/booked_data?email=${user?.email}`)
         .then((res) => setData(res.data));
     }
   }, [user, axiosPublic,reload]);
@@ -76,7 +76,7 @@ const cancelHandle=(item)=>{
                   </span>
                 </td>
                 <td>{item.date}</td>
-                <td>{item.report? "Solved" :"Pending"}</td>
+                <td>{item.report? "Delivered" :"Pending"}</td>
                  
                 <th>
                   <button onClick={()=>cancelHandle(item)} className="btn btn-warning btn-xs">Cancel</button>

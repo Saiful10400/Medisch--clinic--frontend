@@ -21,7 +21,7 @@ const{user}=useContext(dataProvider)
   const { data: banners = [], refetch } = useQuery({
     queryKey: ["banners"],
     queryFn: async () => {
-      const res = await axiosPublic.get(`/get_banners?email=${user.email}`,{withCredentials:true});
+      const res = await axiosPublic.get(`/get_banners?email=${user?.email}`,{withCredentials:true});
       return res.data;
     },
   });

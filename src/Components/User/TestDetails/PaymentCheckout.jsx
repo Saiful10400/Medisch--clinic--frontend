@@ -82,7 +82,7 @@ const[error,setError]=useState("")
 
             // all nescessary staf will send form here.
             console.log(item)
-            const bookedService={name:item.testName,userEmail:user.email,transectionId:paymentIntent.id,userName:user.displayName,discount,report:null,date:item.date,price:item.price,imgUrl:item.imageUrl}
+            const bookedService={name:item.testName,userEmail:user?.email,transectionId:paymentIntent.id,userName:user.displayName,discount,report:null,date:item.date,price:item.price,imgUrl:item.imageUrl}
             axiosPublic.post("/add_booked_item",bookedService)
             .then((res)=>{
                 if(res.data.acknowledged){

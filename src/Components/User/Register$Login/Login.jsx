@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { dataProvider } from "../../Context Api/DataProvider";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const[error,seterror]=useState(null)
@@ -34,7 +35,17 @@ console.log(user)
     const password=data.password
 
     emailLogin(email,password)
-    .then(()=>move("/"))
+    .then(()=>{
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Successfully logged in.",
+        showConfirmButton: false,
+        timer: 1500
+      });
+      move("/")
+    }
+    )
     .catch(err=>{
       seterror(err.message.split(":")[1].split(" ")[2])
     })
@@ -56,7 +67,7 @@ console.log(user)
   return (
     <div>
       <div>
-        <div className="flex flex-col lg:flex-row h-[calc(100vh-76px)]">
+        <div className="flex flex-col lg:flex-row mb-5">
           <div className="lg:w-1/3 flex relative">
             <img
               className="absolute bottom-0 left-[50px] h-[483px] hidden lg:block"
@@ -113,7 +124,7 @@ console.log(user)
                 </NavLink>
               </h1>
 
-              <div className="flex flex-col w-full border-opacity-50">
+              {/* <div className="flex flex-col w-full border-opacity-50">
                 <div className="divider">Or</div>
                 <h1 className="text-base font-normal text-[#808080] mb-[16px]">
                   Login with -
@@ -126,7 +137,7 @@ console.log(user)
                     <img className="w-full h-full" src={facebook} alt="" />
                   </button>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

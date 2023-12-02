@@ -17,10 +17,10 @@ const Home = () => {
   return (
     <div>
       
-      <div className="w-full h-[300px] lg:h-[600px]  relative">
+      <div className="w-full h-[300px]   lg:h-[600px]  relative">
         <img className="w-full h-full object-cover " src={banner?.url} alt="" />
         <div className="w-full h-full  bg-gradient-to-r from-[#000000] to-[#ffffff40] text-white absolute top-0 left-0">
-          <div className="lg:w-[1400px] h-full mx-auto  flex justify-center flex-col">
+          <div className="lg:w-[1400px] h-full mx-auto pl-2 lg:pl-0 flex justify-center flex-col">
             <h1 className=" lg:mb-4 font-semibold text-3xl lg:text-[60px]">
               {banner?.title}
             </h1>

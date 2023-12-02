@@ -25,6 +25,7 @@ const TestResult = () => {
                 </th>
                 <th>Test</th>
                 <th>Payment</th>
+                <th>Download</th>
                 
                  
               </tr>

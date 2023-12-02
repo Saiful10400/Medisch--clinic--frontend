@@ -21,11 +21,13 @@ import PrivateRoute from "../Roleathenticate/PrivateRoute";
 import Doctors from "../User/Exraroutes/Doctors";
 import Blogs from "../User/Exraroutes/Blogs";
 import Contact from "../User/Exraroutes/Contact";
+import Error from './../User/Error';
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <User></User>,
+    errorElement:<Error></Error>,
     children: [
       {
         path: "/",
